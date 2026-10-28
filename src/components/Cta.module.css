@@ -1,0 +1,98 @@
+.cta {
+  --cut: 10px;
+  --cta-bg: var(--ink-0); /* fundo interno: ajuste se o botão estiver sobre outra superfície */
+  --shape: polygon(0 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% 100%, var(--cut) 100%, 0 calc(100% - var(--cut)));
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 46px;
+  padding: 0 18px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  clip-path: var(--shape);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+/* Contorno: a camada externa é a linha, a interna (1px para dentro) é o fundo */
+.cta::before {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  z-index: -1;
+  clip-path: var(--shape);
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+
+.line {
+  background: var(--line-strong);
+  color: var(--bone);
+}
+.line::before {
+  background: var(--cta-bg);
+}
+.line:hover,
+.line:focus-visible {
+  color: var(--signal-ink);
+}
+.line:hover::before,
+.line:focus-visible::before {
+  background: var(--accent);
+}
+
+.solid {
+  background: var(--accent);
+  color: var(--signal-ink);
+}
+.solid::before {
+  background: var(--accent);
+}
+.solid:hover::before,
+.solid:focus-visible::before {
+  background: var(--bone);
+}
+
+.label {
+  white-space: nowrap;
+}
+
+.arrow {
+  transition: transform var(--dur) var(--ease-out);
+}
+
+.cta:hover .arrow {
+  transform: translate(2px, -2px);
+}
+
+/* Etiquetas */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 0 8px;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.tag-line {
+  border: 1px solid var(--line-strong);
+  color: var(--bone-dim);
+}
+
+.tag-solid {
+  background: var(--accent);
+  color: var(--signal-ink);
+}
+
+.tag-ghost {
+  background: var(--bone-ghost);
+  color: var(--bone-dim);
+}

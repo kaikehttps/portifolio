@@ -1,0 +1,190 @@
+/* Duas camadas: cantos + ponto em "difference" (legíveis sobre qualquer fundo)
+   e o rótulo sólido por cima, sem mistura. Nunca capturam cliques. */
+
+.blend,
+.solid {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: var(--z-cursor);
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s var(--ease-out);
+}
+
+.blend {
+  mix-blend-mode: difference;
+  color: var(--bone);
+}
+
+.blend[data-visible='true'],
+.solid[data-visible='true'] {
+  opacity: 1;
+}
+
+.blend[data-mode='hide'],
+.solid[data-mode='hide'] {
+  opacity: 0;
+}
+
+.anchor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform;
+}
+
+/* Quadro: quatro cantos posicionados por --w/--h */
+.frame {
+  --w: 30px;
+  --h: 30px;
+  --arm: 8px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: transform 0.35s var(--ease-out);
+}
+
+.blend[data-pressed='true'] .frame {
+  transform: scale(0.8);
+}
+
+/* Travado num alvo: o quadro já o enquadra, o clique só "aperta" um pouco */
+.blend[data-locked='true'] .frame {
+  --arm: 10px;
+}
+
+.blend[data-locked='true'][data-pressed='true'] .frame {
+  transform: scale(0.94);
+}
+
+.corner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--arm);
+  height: var(--arm);
+  border: 0 solid currentColor;
+  transition: transform 0.55s var(--ease-out);
+}
+
+.corner[data-c='tl'] {
+  border-width: 1px 0 0 1px;
+  transform: translate(calc(var(--w) / -2), calc(var(--h) / -2));
+}
+
+.corner[data-c='tr'] {
+  border-width: 1px 1px 0 0;
+  transform: translate(calc(var(--w) / 2 - var(--arm)), calc(var(--h) / -2));
+}
+
+.corner[data-c='bl'] {
+  border-width: 0 0 1px 1px;
+  transform: translate(calc(var(--w) / -2), calc(var(--h) / 2 - var(--arm)));
+}
+
+.corner[data-c='br'] {
+  border-width: 0 1px 1px 0;
+  transform: translate(calc(var(--w) / 2 - var(--arm)), calc(var(--h) / 2 - var(--arm)));
+}
+
+/* Link: os cantos abrem e engrossam — o visor "trava o foco" */
+.blend[data-mode='link'] .corner[data-c='tl'] {
+  border-width: 2px 0 0 2px;
+}
+
+.blend[data-mode='link'] .corner[data-c='tr'] {
+  border-width: 2px 2px 0 0;
+}
+
+.blend[data-mode='link'] .corner[data-c='bl'] {
+  border-width: 0 0 2px 2px;
+}
+
+.blend[data-mode='link'] .corner[data-c='br'] {
+  border-width: 0 2px 2px 0;
+}
+
+/* Ponto central (quadrado — cantos retos) */
+.dot {
+  position: absolute;
+  top: -2.5px;
+  left: -2.5px;
+  width: 5px;
+  height: 5px;
+  background: currentColor;
+  transition: transform 0.3s var(--ease-out);
+}
+
+.blend[data-mode='link'] .dot,
+.blend[data-mode='view'] .dot,
+.blend[data-mode='drag'] .dot {
+  transform: scale(0);
+}
+
+/* Rótulo: abre do centro como um obturador */
+.chip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 34px;
+  padding: 0 15px 0 13px;
+  translate: -50% -50%;
+  background: var(--bone);
+  color: var(--signal-ink);
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+  clip-path: inset(50% 50% 50% 50%);
+  transition: clip-path 0.5s var(--ease-out);
+}
+
+.solid[data-mode='view'] .chip,
+.solid[data-mode='drag'] .chip {
+  clip-path: inset(0 0 0 0);
+}
+
+.solid[data-pressed='true'] .chip {
+  transform: scale(0.94);
+}
+
+.rec {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--signal);
+  animation: rec 1.1s steps(2, jump-none) infinite;
+}
+
+.chipLabel {
+  padding-top: 1px;
+}
+
+.arrowL,
+.arrowR {
+  flex: none;
+}
+
+@keyframes rec {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.15;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rec {
+    animation: none;
+  }
+}

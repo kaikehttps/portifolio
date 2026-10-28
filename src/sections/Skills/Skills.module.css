@@ -1,0 +1,111 @@
+.section {
+  padding-top: var(--section-pad);
+}
+
+/* a faixa vai de borda a borda e esmaece nas pontas */
+.strip {
+  margin-top: calc(-1 * clamp(24px, 3vw, 48px));
+  overflow: hidden;
+  border-block: 1px solid var(--line);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+}
+
+.rail {
+  display: flex;
+  width: max-content;
+  animation: slide 80s linear infinite;
+}
+.strip:hover .rail,
+.strip:focus-within .rail {
+  animation-play-state: paused;
+}
+
+@keyframes slide {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.row {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: clamp(28px, 3.4vw, 48px);
+  padding: clamp(22px, 2.6vw, 32px) clamp(14px, 1.7vw, 24px);
+}
+
+.tool {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--bone-dim);
+  white-space: nowrap;
+  transition: color var(--dur) var(--ease-out);
+}
+.tool:hover {
+  color: var(--bone);
+}
+.tool[data-soft] {
+  opacity: 0.6;
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 26px;
+  height: 26px;
+  color: var(--bone-dim);
+  transition: color var(--dur) var(--ease-out);
+}
+.tool:hover .icon {
+  color: var(--brand, var(--bone));
+}
+
+.initial {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.875rem;
+}
+
+.name {
+  font-size: var(--fs-md);
+  line-height: 1.2;
+}
+
+.note {
+  padding: 3px 8px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--signal-ink);
+  background: var(--signal);
+}
+
+/* movimento reduzido: sem faixa deslizando — a lista corrida quebra em linhas */
+@media (prefers-reduced-motion: reduce) {
+  .strip {
+    mask-image: none;
+  }
+  .rail {
+    display: block;
+    animation: none;
+    width: auto;
+    padding-inline: var(--gutter);
+  }
+  .row {
+    flex: 1 1 auto;
+    flex-wrap: wrap;
+    padding-inline: 0;
+  }
+  .row[aria-hidden='true'] {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .rail {
+    animation-duration: 60s;
+  }
+}

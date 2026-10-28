@@ -1,0 +1,87 @@
+.intro {
+  /* respiro de seção, mas sem virar uma faixa morta em telas altas (tablet) */
+  --pad: min(var(--section-pad), clamp(80px, 11vw, 160px));
+  padding-block: var(--pad) calc(var(--pad) * 0.75);
+  row-gap: 28px;
+}
+
+.aside {
+  grid-column: 1 / 4;
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  padding-top: 0.9em;
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--bone);
+}
+
+.square {
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+}
+
+.body {
+  grid-column: 4 / 12;
+}
+
+.text {
+  max-width: 34ch;
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 2.2vw, 2.25rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.012em;
+  color: var(--bone);
+  text-wrap: pretty;
+}
+
+/* capitular: display comprimido no acento do projeto */
+.text::first-letter {
+  float: left;
+  margin: 0.05em 0.1em -0.1em 0;
+  font-family: var(--font-display);
+  font-size: 3.35em;
+  font-weight: 800;
+  font-stretch: 62%;
+  font-variation-settings: 'wdth' 62;
+  line-height: 0.8;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+
+.mark {
+  font-style: italic;
+  padding: 0.02em 0.14em 0.06em;
+  margin: 0;
+  line-height: 0.95;
+}
+
+@media (max-width: 860px) {
+  .aside,
+  .body {
+    grid-column: 1 / -1;
+  }
+  .aside {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0 14px;
+    border-bottom: 1px solid var(--line);
+  }
+  .text {
+    font-size: clamp(1.75rem, 4.6vw, 2.5rem);
+  }
+}
+
+@media (max-width: 640px) {
+  .text {
+    font-size: 1.75rem;
+    line-height: 1.12;
+  }
+}

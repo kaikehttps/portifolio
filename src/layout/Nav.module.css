@@ -1,0 +1,197 @@
+/* Barra fixa ───────────────────────────────────────────────── */
+
+/* max-width: 100vw protege as camadas fixas se algum conteúdo estourar a largura no celular */
+.bar {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: var(--z-nav);
+  max-width: 100vw;
+  height: var(--nav-h);
+  padding-inline: var(--gutter);
+  transition: transform 0.7s var(--ease-out);
+}
+
+.bar[data-hidden='true'] {
+  transform: translateY(-105%);
+}
+
+/* Véu escuro só depois de sair do topo: legível sobre qualquer imagem */
+.scrim {
+  position: absolute;
+  inset: 0 0 -28px;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--ink-0) 92%, transparent) 0%,
+    color-mix(in srgb, var(--ink-0) 70%, transparent) 55%,
+    transparent 100%
+  );
+  opacity: 0;
+  transition: opacity 0.5s var(--ease-out);
+}
+
+.bar[data-scrolled='true'] .scrim {
+  opacity: 1;
+}
+
+/* Duas pontas: links · contato (a assinatura só aparece até 1024px) */
+.inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  height: 100%;
+}
+
+/* Desktop: links em texto simples ─────────────────────────── */
+
+.list {
+  display: flex;
+  align-items: center;
+  gap: clamp(20px, 2.4vw, 36px);
+}
+
+.link {
+  position: relative;
+  display: inline-block;
+  padding-block: 12px;
+  font-size: 0.875rem;
+  color: var(--bone-dim);
+  white-space: nowrap;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 8px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.5s var(--ease-out);
+}
+
+.link:hover,
+.link:focus-visible,
+.link[data-active='true'] {
+  color: var(--bone);
+}
+
+.link:hover::after,
+.link[data-active='true']::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.center {
+  display: none;
+}
+
+.end {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Pílula "Contatar" com o círculo da seta */
+.contact {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  height: 44px;
+  padding: 0 4px 0 20px;
+  border-radius: 999px;
+  background: var(--bone);
+  color: var(--ink-0);
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+
+.contactIcon {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--ink-0);
+  color: var(--bone);
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    transform 0.4s var(--ease-out);
+}
+
+.contact:hover .contactIcon,
+.contact:focus-visible .contactIcon {
+  background: var(--signal);
+  transform: translateY(2px);
+}
+
+/* Mobile/tablet: botão Menu ──────────────────────────────────── */
+
+/* Contorno chanfrado: camada externa = linha, ::before (1px para dentro) = fundo */
+.menuBtn {
+  --cut: 9px;
+  --shape: polygon(0 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% 100%, 0 100%);
+  position: relative;
+  isolation: isolate;
+  display: none;
+  align-items: center;
+  gap: 10px;
+  height: 44px;
+  padding: 0 18px 0 14px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--bone);
+  background: var(--line-strong);
+  clip-path: var(--shape);
+}
+
+.menuBtn::before {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  z-index: -1;
+  background: var(--ink-0);
+  clip-path: var(--shape);
+}
+
+.menuIcon {
+  display: grid;
+  gap: 4px;
+  width: 16px;
+}
+
+.menuIcon span {
+  display: block;
+  height: 1px;
+  background: currentColor;
+}
+
+.menuIcon span:last-child {
+  width: 10px;
+  background: var(--signal);
+  height: 2px;
+}
+
+@media (max-width: 1024px) {
+  .desktop,
+  .contact {
+    display: none;
+  }
+
+  .center {
+    display: block;
+  }
+
+  .menuBtn {
+    display: inline-flex;
+  }
+}

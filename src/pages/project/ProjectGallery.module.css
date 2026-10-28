@@ -1,0 +1,451 @@
+.gallery {
+  position: relative;
+}
+
+/* ── cabeçalho HUD ─────────────────────────────────── */
+.head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+  padding-bottom: 14px;
+}
+
+.title {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 10px;
+  color: var(--bone);
+}
+
+.square {
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+}
+
+.rule {
+  flex: 0 0 clamp(24px, 5vw, 88px);
+  height: 1px;
+  background: var(--line-strong);
+}
+
+.fill {
+  flex: 1 1 auto;
+  min-width: 16px;
+  height: 1px;
+  background-image: linear-gradient(to right, var(--line-strong) 1px, transparent 1px);
+  background-size: 6px 1px;
+}
+
+.range {
+  white-space: nowrap;
+}
+
+.blocks {
+  display: grid;
+  row-gap: clamp(64px, 8vw, 128px);
+  padding-top: clamp(40px, 5vw, 72px);
+}
+
+/* ── imagem ────────────────────────────────────────── */
+.media {
+  position: relative;
+  min-width: 0;
+}
+
+.plain {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: var(--ink-2);
+}
+
+/* ── legendas ──────────────────────────────────────── */
+.cap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 14px;
+  margin-top: 14px;
+}
+
+.capNo {
+  color: var(--bone);
+}
+
+.capText {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.125rem, 1.4vw, 1.375rem);
+  line-height: 1.1;
+  color: var(--bone-dim);
+}
+
+/* legenda lateral (capturas deslocadas no desktop) */
+.sideCap {
+  display: grid;
+  justify-items: start;
+  gap: 12px;
+  padding-bottom: 4px;
+}
+
+/* numeral em contorno que morde a borda da imagem (colisão, não legenda) */
+.capBig {
+  position: relative;
+  z-index: 4;
+  font-size: clamp(4rem, 7vw, 7.5rem);
+  line-height: 0.8;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--accent);
+  mix-blend-mode: difference; /* continua legível sobre imagens da mesma cor do acento */
+  pointer-events: none;
+}
+
+.sideCap .capNo {
+  width: 100%;
+  padding-top: 12px;
+  border-top: 1px solid var(--line-strong);
+}
+
+.sideCap .capText {
+  font-size: clamp(1.375rem, 2vw, 2rem);
+  line-height: 1.02;
+  color: var(--bone);
+  text-wrap: balance;
+}
+
+/* ── larga: deslocada / sangrada ───────────────────── */
+.wide {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--col-gap);
+  align-items: end;
+}
+
+.right .media {
+  grid-column: 4 / -1;
+  grid-row: 1;
+}
+.right .sideCap {
+  grid-column: 1 / 4;
+  grid-row: 1;
+  justify-items: end;
+  text-align: right;
+}
+.right .capBig {
+  margin-right: calc(var(--col-gap) * -1 - 0.14em);
+}
+
+.left .media {
+  grid-column: 1 / 10;
+  grid-row: 1;
+}
+.left .sideCap {
+  grid-column: 10 / -1;
+  grid-row: 1;
+}
+.left .capBig {
+  margin-left: calc(var(--col-gap) * -1 - 0.14em);
+}
+
+/* cota: fio vertical com marcas nas pontas, rente à imagem, na metade de cima */
+.dim {
+  position: relative;
+  grid-row: 1;
+  align-self: start;
+  width: 9px;
+  height: 44%;
+  border-block: 1px solid var(--line-strong);
+  background: linear-gradient(var(--line-strong), var(--line-strong)) 50% 0 / 1px 100% no-repeat;
+}
+.right .dim {
+  grid-column: 3 / 4;
+  justify-self: end;
+}
+.left .dim {
+  grid-column: 10 / 11;
+  justify-self: start;
+}
+
+.dimLabel {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  padding-block: 10px;
+  background: var(--ink-0);
+  white-space: nowrap;
+  writing-mode: vertical-rl;
+  transform: translate(-50%, -50%) rotate(180deg);
+}
+
+.bleed {
+  display: block;
+  margin-inline: calc(var(--gutter) * -1);
+}
+.bleed .cap {
+  padding-inline: var(--gutter);
+}
+
+/* ── dupla ─────────────────────────────────────────── */
+.duo {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--col-gap);
+  align-items: start;
+}
+
+/* B sobrepõe A em uma coluna: uma prova colada por cima da outra */
+.duoA {
+  grid-column: 1 / 9;
+  grid-row: 1;
+}
+
+.duoB {
+  position: relative;
+  z-index: 2;
+  grid-column: 8 / -1;
+  grid-row: 1;
+  /* pendurada abaixo de A: a legenda desce um degrau inteiro, nunca "quase alinhada" */
+  margin-top: clamp(200px, 25vw, 380px);
+}
+
+/* passe-partout preto separa a prova de cima da de baixo */
+.duoB .plain {
+  box-shadow:
+    0 0 0 1px var(--line-strong),
+    0 0 0 clamp(8px, 0.9vw, 14px) var(--ink-0);
+}
+
+/* ── celulares ─────────────────────────────────────── */
+.phones {
+  position: relative;
+  margin-inline: calc(var(--gutter) * -1);
+  /* folga para o parallax (±40px) e para a régua de meta no topo */
+  padding: clamp(80px, 7vw, 112px) var(--gutter) clamp(88px, 8vw, 128px);
+  overflow: hidden;
+  border-block: 1px solid var(--line);
+  background:
+    linear-gradient(to right, var(--line) 1px, transparent 1px) calc(var(--gutter) - 1px) 0 / calc((100% - var(--gutter) * 2) / 6) 100% repeat-x,
+    var(--ink-1);
+}
+
+.ghost {
+  display: none; /* palavra-fantasma de fundo removida: menos ruído */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 19vw;
+  color: transparent;
+  -webkit-text-stroke: 1px color-mix(in srgb, var(--accent) 34%, transparent);
+  white-space: nowrap;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.phonesMeta {
+  position: absolute;
+  top: 18px;
+  left: var(--gutter);
+  right: var(--gutter);
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.row {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: clamp(28px, 6vw, 112px);
+}
+
+.phone {
+  position: relative;
+  flex: 0 0 auto;
+  width: clamp(170px, 19vw, 280px);
+}
+
+.row > .phone:nth-child(even) {
+  margin-top: clamp(40px, 6vw, 96px);
+}
+
+/* fileira espelhada: aparelhos à direita, escada invertida, letreiro ancorado à direita */
+@media (min-width: 641px) {
+  .phones[data-alt] .row {
+    justify-content: flex-end;
+    padding-right: calc(100% / 12);
+  }
+  .phones[data-alt] .row > .phone:nth-child(even) {
+    margin-top: 0;
+  }
+  .phones[data-alt] .row > .phone:nth-child(odd) {
+    margin-top: clamp(40px, 6vw, 96px);
+  }
+  .phones[data-alt] .ghost {
+    left: auto;
+    right: 0;
+    transform: translate(12%, -50%);
+  }
+}
+
+.phoneMedia {
+  position: relative;
+}
+
+/* o botão de ampliar acompanha o arredondado do aparelho */
+.phoneMedia > button {
+  border-radius: 13% / 6%;
+}
+
+.phoneCap {
+  display: grid;
+  gap: 4px;
+  margin-top: 18px;
+}
+
+.phoneCapText {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.125rem;
+  line-height: 1.1;
+  color: var(--bone-dim);
+}
+
+.track {
+  position: relative;
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--gutter);
+  padding-inline: var(--gutter);
+  padding-bottom: 6px;
+  scrollbar-width: none;
+}
+
+.track::-webkit-scrollbar {
+  display: none;
+}
+
+.track .phone {
+  flex: 0 0 60vw;
+  width: auto;
+  scroll-snap-align: start;
+}
+
+.track > .phone:nth-child(even) {
+  margin-top: 36px;
+}
+
+.hint {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 18px;
+  padding-inline: var(--gutter);
+}
+
+/* ── tablet ────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .wide {
+    display: block;
+  }
+  .right .media {
+    margin: 0 calc(var(--gutter) * -1) 0 8%;
+  }
+  .left .media {
+    margin: 0 8% 0 calc(var(--gutter) * -1);
+  }
+  .right .sideCap,
+  .left .sideCap {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 14px;
+    margin-top: 14px;
+    padding: 0;
+    text-align: left;
+  }
+  .right .sideCap {
+    margin-left: 8%;
+  }
+  .capBig,
+  .dim {
+    display: none;
+  }
+  .sideCap .capNo {
+    width: auto;
+    padding: 0;
+    border: 0;
+  }
+  .sideCap .capText {
+    font-size: 1.25rem;
+    color: var(--bone-dim);
+  }
+  .duo {
+    display: block;
+  }
+  .duoB {
+    width: 72%;
+    margin: 56px 0 0 auto;
+  }
+  .phones {
+    background:
+      linear-gradient(to right, var(--line) 1px, transparent 1px) calc(var(--gutter) - 1px) 0 / calc((100% - var(--gutter) * 2) / 3) 100% repeat-x,
+      var(--ink-1);
+  }
+  .phone {
+    width: 26vw;
+  }
+}
+
+/* ── celular ───────────────────────────────────────── */
+@media (max-width: 640px) {
+  .range,
+  .rule {
+    display: none;
+  }
+  .right .media {
+    margin-left: 0;
+  }
+  .left .media {
+    margin-right: 0;
+  }
+  .right .sideCap {
+    margin-left: 0;
+  }
+  .duoB {
+    width: 82%;
+    margin-top: 40px;
+  }
+  .phones {
+    padding: 64px 0 40px;
+  }
+  .ghost {
+    font-size: 30vw;
+  }
+  .row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    padding-inline: var(--gutter);
+  }
+  .row .phone {
+    width: auto;
+  }
+  .row > .phone:nth-child(even) {
+    margin-top: 56px;
+  }
+  .phones[data-count='1'] .row {
+    grid-template-columns: minmax(0, 0.64fr);
+    justify-content: center;
+  }
+  .phoneCapText {
+    font-size: 1rem;
+  }
+}

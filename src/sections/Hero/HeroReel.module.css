@@ -1,0 +1,91 @@
+/* Lado direito do início, de borda a borda (atrás da navegação, até a faixa de baixo) */
+.reel {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 66%;
+  pointer-events: none;
+}
+
+.slides {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.6s var(--ease-in-out);
+}
+.slide[data-on] {
+  opacity: 1;
+}
+
+/* aproximação lenta da câmera enquanto a imagem está em cena */
+.slide img,
+.slide video {
+  filter: brightness(0.82);
+  transform: scale(1.02);
+  transition: transform 8s linear;
+}
+.slide[data-on] img,
+.slide[data-on] video {
+  transform: scale(1.09);
+}
+.reel[data-anim='still'] .slide img {
+  transform: none;
+  transition: none;
+}
+
+/* dissolve no preto: forte do lado do nome, suave em cima (navegação) e embaixo (faixa) */
+.shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, var(--ink-0) 0%, rgb(5 5 5 / 0.96) 20%, rgb(5 5 5 / 0.6) 42%, rgb(5 5 5 / 0.18) 72%),
+    linear-gradient(0deg, var(--ink-0) 0%, rgb(5 5 5 / 0) 34%),
+    linear-gradient(180deg, rgb(5 5 5 / 0.75) 0%, rgb(5 5 5 / 0) 22%);
+}
+
+/* Pausa: fora da tela até receber foco pelo teclado */
+.pause {
+  position: absolute;
+  top: calc(var(--nav-h) + 16px);
+  right: var(--gutter);
+  min-height: 44px;
+  padding: 0 16px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--bone);
+  background: var(--ink-0);
+  border: 1px solid var(--line-strong);
+  cursor: pointer;
+  pointer-events: auto;
+  transform: translateY(-200%);
+  opacity: 0;
+}
+.pause:focus-visible {
+  transform: none;
+  opacity: 1;
+}
+
+/* Tablet e celular: a imagem vira o topo da tela e dissolve para baixo, sob o nome */
+@media (max-width: 1024px) and (orientation: portrait), (max-width: 899px) and (min-height: 501px), (max-width: 640px) {
+  .reel {
+    left: 0;
+    width: auto;
+    bottom: auto;
+    height: 64%;
+  }
+  .shade {
+    background:
+      linear-gradient(0deg, var(--ink-0) 0%, rgb(5 5 5 / 0.9) 26%, rgb(5 5 5 / 0.45) 62%, rgb(5 5 5 / 0.3) 100%),
+      linear-gradient(180deg, rgb(5 5 5 / 0.7) 0%, rgb(5 5 5 / 0) 26%);
+  }
+}

@@ -1,0 +1,208 @@
+.cover {
+  --bleed: clamp(0px, 0.9vw, 14px); /* sobra entre a capa e a borda da tela */
+  --lb: 12.8%; /* barra do letterbox: 16:9 → 2.39:1 */
+  position: relative;
+  /* dentro da coluna e com teto pela altura da tela: a capa não engole a página */
+  width: 100%;
+  max-width: min(100%, 128svh);
+  margin-inline: auto;
+}
+
+.shell {
+  position: relative;
+}
+
+.frame {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  background: var(--ink-1);
+  box-shadow: 0 0 0 1px var(--line);
+}
+
+/* mais alta que o quadro para o parallax não abrir frestas */
+.media {
+  position: absolute;
+  inset: -5% 0;
+}
+
+.bar,
+.curtain {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  background: var(--ink-1); /* passe-partout visível: o quadro 2.39:1 tem borda */
+  pointer-events: none;
+}
+
+.bar {
+  height: var(--lb);
+}
+
+.curtain {
+  height: calc(50% + 1px);
+}
+
+.top {
+  top: 0;
+  transform-origin: 50% 0;
+}
+
+.bottom {
+  bottom: 0;
+  transform-origin: 50% 100%;
+}
+
+/* visor de câmera dentro da barra de cima: some quando as barras recolhem */
+.finder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  height: var(--lb);
+  padding-inline: calc(var(--gutter) - var(--bleed));
+  pointer-events: none;
+}
+
+.tc {
+  flex: none;
+  color: var(--bone);
+  font-variant-numeric: tabular-nums;
+}
+
+/* régua de visor entre o timecode e a proporção */
+.finderFill {
+  flex: 1 1 auto;
+  min-width: 16px;
+  height: 7px;
+  background:
+    linear-gradient(to right, var(--line-strong) 1px, transparent 1px) 0 100% / 8px 3px repeat-x,
+    linear-gradient(to right, var(--line-strong) 1px, transparent 1px) 0 100% / 64px 7px repeat-x;
+}
+
+.rec {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 8px;
+  color: var(--bone);
+}
+
+.recDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--signal);
+  animation: rec 1.6s steps(1, end) infinite;
+}
+
+@keyframes rec {
+  50% {
+    opacity: 0.2;
+  }
+}
+
+.ratio {
+  flex: none;
+}
+
+/* fio de luz no centro antes da cortina abrir */
+.seam {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  height: 1px;
+  background: var(--accent);
+  transform-origin: 50% 50%;
+  pointer-events: none;
+}
+
+.cap {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+  margin-top: 14px;
+  padding-inline: calc(var(--gutter) - var(--bleed));
+}
+
+.cap > span:first-child {
+  flex: none;
+}
+
+.capRule {
+  flex: 1 1 auto;
+  min-width: 24px;
+  height: 1px;
+  background: var(--line);
+}
+
+.cap > span:last-child:not(.capRule) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── capa de app (moldura de celular) ─────────────── */
+.stage {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background:
+    linear-gradient(to right, var(--line) 1px, transparent 1px) 0 0 / calc(100% / 12) 100%,
+    var(--ink-1);
+}
+
+.ghost {
+  display: none; /* palavra-fantasma de fundo removida: menos ruído */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 22vw;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--line-strong);
+  white-space: nowrap;
+  transform: translate(-50%, -50%);
+}
+
+.phoneSlot {
+  position: relative;
+  height: 80%;
+  aspect-ratio: 9 / 19.5;
+}
+
+@media (max-width: 1024px) {
+  .cover {
+    --lb: 16%;
+  }
+  .frame {
+    aspect-ratio: 16 / 10;
+  }
+}
+
+@media (max-width: 640px) {
+  .cover {
+    --bleed: 0px;
+  }
+  .marks {
+    display: none;
+  }
+  .isPhone .frame {
+    aspect-ratio: 4 / 5;
+  }
+  .isPhone {
+    --lb: 6%;
+  }
+  .ghost {
+    font-size: 34vw;
+  }
+}

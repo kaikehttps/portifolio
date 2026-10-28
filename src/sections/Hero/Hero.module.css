@@ -1,0 +1,600 @@
+/* ─────────────────────────────────────────────────────────────
+   HERO — cartela de título
+   --name-size e --word-w vêm do motor (useNameEngine); os valores
+   abaixo são só o ponto de partida antes da medição.
+   ───────────────────────────────────────────────────────────── */
+
+.hero {
+  --name-size: calc((100vw - 2 * var(--gutter)) / 2.5);
+  --word-w: calc(var(--name-size) * 2.25);
+  --name-fill: 0.56; /* teto: fração do palco que a linha do nome pode ocupar */
+  --name-k: 0.6; /* idem, em fração da tela (layouts empilhados) */
+  --name-max: 240; /* teto absoluto do corpo do nome, em px (sem unidade: lido pelo motor) */
+
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  height: 100svh;
+  min-height: 640px;
+  padding: calc(var(--nav-h) + 14px) var(--gutter) 0;
+  overflow: clip;
+  background: var(--ink-0);
+}
+
+/* ── Fundo técnico ─────────────────────────────────────────── */
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.cols {
+  position: absolute;
+  inset: var(--nav-h) var(--gutter) 0;
+}
+.cols span {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--c) / 6 * 100%);
+  width: 1px;
+  background: var(--line);
+  opacity: 0.35;
+  transform-origin: top;
+}
+
+
+
+
+/* ── HUD superior ──────────────────────────────────────────── */
+
+.top {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 20px;
+}
+.kicker {
+  flex: none;
+}
+.topFill {
+  flex: 1 1 auto;
+  min-width: 24px;
+  height: 1px;
+  background-image: linear-gradient(to right, var(--line-strong) 1px, transparent 1px);
+  background-size: 6px 1px;
+}
+.topMeta {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+.star {
+  color: var(--signal);
+}
+.topWord {
+  display: inline;
+}
+
+/* ── Palco ─────────────────────────────────────────────────── */
+
+.stage {
+  position: relative;
+  isolation: isolate;
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: calc(var(--name-size) * 0.09);
+}
+
+
+
+
+.nameBlock {
+  position: relative;
+  /* o nome ocupa ~60% da largura: o quadro fica ao lado, não por cima */
+  width: 62%;
+}
+
+.title {
+  position: relative;
+  z-index: 1;
+  transform-origin: 0% 100%;
+}
+
+.line {
+  display: block;
+  font-size: var(--name-size);
+  /* alinhamento óptico: compensa o recuo lateral do K (≈0.043em medido) para a haste encostar na grade */
+  margin-left: -0.043em;
+  line-height: 0.82;
+  white-space: nowrap;
+  overflow-x: visible;
+  overflow-y: clip;
+  color: var(--bone);
+}
+
+.char {
+  display: inline-block;
+  font-variation-settings:
+    'wdth' var(--wd, 62),
+    'wght' var(--wg, 820);
+}
+
+/* camada-fantasma: só o contorno, por cima do quadro */
+
+
+
+/* "Alves": serifa itálica em sinal, com recorte de tinta para colidir sem sujar */
+.alves {
+  position: absolute;
+  z-index: 4;
+  right: max(0px, calc(100% - var(--word-w) - var(--name-size) * 0.13));
+  bottom: calc(var(--name-size) * -0.115);
+  font-size: calc(var(--name-size) * 0.45);
+  line-height: 1;
+  pointer-events: none;
+}
+.alvesText {
+  display: block;
+  padding: 0 0.1em;
+  line-height: 1;
+  color: var(--signal);
+  -webkit-text-stroke: 0.075em var(--ink-0);
+  paint-order: stroke fill;
+}
+
+/* Etiqueta-adesivo com a função */
+.sticker {
+  position: absolute;
+  z-index: 4;
+  top: 0;
+  left: calc(var(--name-size) * 0.03);
+  translate: 0 -62%;
+  rotate: -3deg;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.5em 0.75em 0.42em;
+  background: var(--bone);
+  color: var(--ink-0);
+  font-family: var(--font-display);
+  font-size: clamp(0.875rem, 0.55rem + 0.9vw, 1.375rem);
+  font-weight: 800;
+  font-stretch: 75%;
+  font-variation-settings:
+    'wdth' 75,
+    'wght' 800;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.stickerStar {
+  flex: none;
+  width: 0.7em;
+  height: 0.7em;
+  color: var(--signal);
+}
+
+/* clone de medição (invisível) */
+.measure {
+  position: absolute;
+  left: 0;
+  top: 0;
+  visibility: hidden;
+  pointer-events: none;
+  font-size: 1000px;
+  line-height: 1;
+  white-space: nowrap;
+}
+.measure > span {
+  display: block;
+}
+.measure > span > span {
+  display: inline-block;
+}
+
+/* ── Faixa inferior ────────────────────────────────────────── */
+
+.band {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--col-gap);
+  align-items: end;
+  padding: clamp(22px, 3.2vh, 36px) 0 clamp(26px, 4vh, 44px);
+  border-top: 1px solid var(--line);
+  /* os fios da grade terminam na régua, onde estão as marcas +
+     (as sombras laterais cobrem os fios das bordas mesmo com o parallax) */
+  background: var(--ink-0);
+  box-shadow:
+    -8px 0 var(--ink-0),
+    8px 0 var(--ink-0);
+}
+
+/* marcas + nos cruzamentos da grade */
+.ticks {
+  position: absolute;
+  top: -5px;
+  left: 0;
+  right: 0;
+  height: 9px;
+  pointer-events: none;
+}
+.ticks span {
+  position: absolute;
+  top: 0;
+  left: calc(var(--c) / 6 * 100%);
+  width: 9px;
+  height: 9px;
+  translate: -50% 0;
+}
+.ticks span::before,
+.ticks span::after {
+  content: '';
+  position: absolute;
+  background: var(--bone-mute);
+}
+.ticks span::before {
+  left: 4px;
+  top: 0;
+  width: 1px;
+  height: 9px;
+}
+.ticks span::after {
+  top: 4px;
+  left: 0;
+  width: 9px;
+  height: 1px;
+}
+
+.bandLabel {
+  display: block;
+}
+
+.synopsis {
+  grid-column: 1 / span 6;
+}
+.intro {
+  max-width: 48ch;
+  font-size: clamp(1rem, 0.92rem + 0.25vw, 1.125rem);
+  line-height: 1.45;
+  color: var(--bone);
+  text-wrap: pretty;
+}
+
+.genres {
+  grid-column: 7 / span 4;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 22px;
+  align-self: end;
+}
+.genre {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.0625rem, 0.9rem + 0.35vw, 1.3125rem);
+  line-height: 1.2;
+  color: var(--bone-dim);
+  white-space: nowrap;
+}
+
+.cue {
+  grid-column: 11 / span 2;
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  padding: 0;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--bone);
+  background: none;
+  border: 0;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.cueIcon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+.cue:hover .cueIcon,
+.cue:focus-visible .cueIcon {
+  background: var(--signal);
+  border-color: var(--signal);
+  color: var(--signal-ink);
+}
+
+/* série vertical na calha esquerda (equilibra o peso do quadro à direita) */
+.serial {
+  display: none !important; /* série vertical removida: menos ruído nas margens */
+  position: absolute;
+  left: calc(var(--gutter) / 2);
+  top: 50%;
+  translate: -50% -50%;
+  writing-mode: vertical-rl;
+  rotate: 180deg;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+}
+.serialStar {
+  color: var(--bone-mute);
+}
+
+/* Celular deitado / telas muito baixas: o nome mede pela altura da tela,
+   para KAIKE + Alves caberem inteiros no primeiro quadro (a faixa fica abaixo da dobra). */
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero {
+    --name-fill: 0;
+    --name-k: 0.5;
+    height: auto;
+    min-height: 100svh;
+  }
+  .stage {
+    /* espaço para o selo não cobrir o HUD superior */
+    padding-top: calc(var(--name-size) * 0.16);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   TABLET — o quadro sobe e ganha tamanho; o nome encosta nele
+   ───────────────────────────────────────────────────────────── */
+
+@media (max-width: 1024px) and (orientation: portrait), (max-width: 899px) and (min-height: 501px), (max-width: 640px) {
+  .hero {
+    --name-fill: 0;
+    --name-k: 0.34;
+    height: auto;
+    min-height: 100svh;
+  }
+  .nameBlock {
+    width: 84%;
+  }
+  .stage {
+    justify-content: center;
+    padding-block: clamp(20px, 3vh, 48px) calc(var(--name-size) * 0.14);
+  }
+
+
+
+  .band {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    row-gap: 22px;
+  }
+  .synopsis {
+    grid-column: 1 / span 4;
+  }
+  .genres {
+    grid-column: 1 / span 4;
+  }
+  .cue {
+    grid-column: 5 / span 2;
+    grid-row: 1 / span 2;
+  }
+  .serial {
+    display: none;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   CELULAR — recomposto: nome no topo, Alves por baixo,
+   o quadro vira uma faixa larga inclinada
+   ───────────────────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  .hero {
+    --name-k: 0.26;
+    padding-top: calc(var(--nav-h) + 12px);
+  }
+  .top {
+    gap: 10px;
+  }
+  .topWord {
+    display: none;
+  }
+  .stage {
+    justify-content: space-evenly;
+    padding-block: clamp(34px, 5svh, 52px) 6px;
+  }
+  .nameBlock {
+    order: 1;
+  }
+
+
+  /* a parte de cima de "Alves" cruza o pé do segundo K e do E */
+  .alves {
+    right: max(0px, calc(100% - var(--word-w) - var(--name-size) * 0.06));
+    font-size: calc(var(--name-size) * 0.54);
+    bottom: calc(var(--name-size) * -0.1);
+  }
+  .sticker {
+    translate: 0 -78%;
+  }
+
+  .cols span:nth-child(even) {
+    display: none;
+  }
+  .band {
+    margin-top: 22px;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 18px;
+    row-gap: 18px;
+    padding-top: 16px;
+    padding-bottom: 18px;
+  }
+  .ticks span:nth-child(even) {
+    display: none;
+  }
+  .synopsis {
+    grid-column: 1 / -1;
+    gap: 8px;
+  }
+  .genres {
+    grid-column: 1;
+    gap: 8px;
+  }
+  .genreList {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 1px;
+  }
+  .genre {
+    gap: 7px;
+  }
+  .genreName {
+    font-size: 1.1875rem;
+  }
+  .cue {
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: end;
+    --cue-h: 64px;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   ENTRADA (depois da abertura)
+   ───────────────────────────────────────────────────────────── */
+
+@keyframes rise {
+  from {
+    transform: translateY(104%);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes alvesIn {
+  from {
+    transform: translateX(22%);
+    opacity: 0;
+    clip-path: inset(-30% -30% -30% 100%);
+  }
+  to {
+    transform: none;
+    opacity: 1;
+    clip-path: inset(-30% -30% -30% -30%);
+  }
+}
+@keyframes pop {
+  from {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+@keyframes up {
+  from {
+    transform: translateY(16px);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+@keyframes type {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+@keyframes draw {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+
+/* estado de espera: tudo recolhido */
+.hero[data-anim='wait'] .char {
+  transform: translateY(104%);
+}
+.hero[data-anim='wait'] .alvesText,
+.hero[data-anim='wait'] .sticker,
+.hero[data-anim='wait'] .synopsis,
+.hero[data-anim='wait'] .genre,
+.hero[data-anim='wait'] .genres > .bandLabel,
+.hero[data-anim='wait'] .cue,
+.hero[data-anim='wait'] .serial,
+
+.hero[data-anim='wait'] .top,
+.hero[data-anim='wait'] .ticks {
+  clip-path: inset(0 100% 0 0);
+}
+.hero[data-anim='wait'] .cols span {
+  transform: scaleY(0);
+}
+
+/* estado em cena */
+.hero[data-anim='go'] .cols span {
+  animation: draw 1.4s var(--ease-out) both;
+  animation-delay: calc(var(--c) * 60ms);
+}
+
+.hero[data-anim='go'] .top {
+  animation: type 0.9s steps(18, end) 0.15s both;
+}
+.hero[data-anim='go'] .char {
+  animation: rise 1.15s var(--ease-out) both;
+  animation-delay: calc(0.12s + var(--i) * 55ms);
+}
+.hero[data-anim='go'] .alvesText {
+  animation: alvesIn 1.1s var(--ease-out) 0.62s both;
+}
+.hero[data-anim='go'] .sticker {
+  animation: pop 0.55s var(--ease-out) 0.95s both;
+}
+.hero[data-anim='go'] .ticks {
+  animation: type 1s var(--ease-out) 0.5s both;
+}
+.hero[data-anim='go'] .synopsis {
+  animation: up 0.9s var(--ease-out) 0.85s both;
+}
+.hero[data-anim='go'] .genres > .bandLabel {
+  animation: up 0.9s var(--ease-out) 0.95s both;
+}
+.hero[data-anim='go'] .genre {
+  animation: up 0.8s var(--ease-out) both;
+  animation-delay: calc(1s + var(--g) * 70ms);
+}
+.hero[data-anim='go'] .cue {
+  animation: up 0.9s var(--ease-out) 1.25s both;
+}
+.hero[data-anim='go'] .serial {
+  animation: fade 1.2s var(--ease-out) 1.3s both;
+}

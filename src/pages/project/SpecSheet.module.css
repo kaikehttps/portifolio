@@ -1,0 +1,112 @@
+.spec {
+  min-width: 0;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line-strong);
+  color: var(--bone);
+}
+
+.star {
+  flex: none;
+  color: var(--accent);
+}
+
+.headRule {
+  flex: 1 1 auto;
+  height: 1px;
+}
+
+.rows {
+  display: grid;
+}
+
+/* rótulo ········· valor */
+.row {
+  display: flex;
+  align-items: baseline;
+  padding-block: 7px;
+  border-bottom: 1px solid var(--line);
+}
+
+.row dt {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: baseline;
+  min-width: 0;
+  color: var(--bone-dim);
+  white-space: nowrap;
+}
+
+/* a linha pontilhada de índice: pousa na linha de base do texto */
+.row dt::after {
+  content: '';
+  flex: 1 1 auto;
+  min-width: 20px;
+  height: 2px;
+  margin-inline: 12px;
+  background-image: radial-gradient(circle, var(--line-strong) 0.8px, transparent 1.1px);
+  background-size: 6px 2px;
+  background-repeat: repeat-x;
+}
+
+.value {
+  flex: 0 1 auto;
+  max-width: 64%;
+  font-size: 0.9375rem;
+  line-height: 1.35;
+  text-align: right;
+  text-wrap: balance;
+}
+
+/*
+  Lista com separador: cada item leva o "·" depois de si e uma margem negativa
+  do mesmo tamanho. O separador do último item de cada linha fica além da borda
+  direita e é recortado — a quebra nunca deixa um ponto solto.
+*/
+.list {
+  --sep: 1.15em;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  column-gap: var(--sep);
+  overflow: hidden;
+}
+
+.item {
+  margin-right: calc(var(--sep) * -1);
+  white-space: nowrap;
+}
+
+.item::after {
+  content: '·';
+  content: '·' / '';
+  display: inline-block;
+  width: var(--sep);
+  color: var(--accent);
+  text-align: center;
+}
+
+.tags {
+  display: flex;
+  flex: 0 1 auto;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px;
+  max-width: 70%;
+  margin-block: -3px;
+}
+
+@media (max-width: 640px) {
+  .value {
+    max-width: 62%;
+  }
+  .row dt::after {
+    margin-inline: 8px;
+    min-width: 12px;
+  }
+}

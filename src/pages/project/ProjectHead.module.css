@@ -1,0 +1,200 @@
+.head {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--col-gap);
+  align-items: start;
+}
+
+/* ── HUD ───────────────────────────────────────────── */
+.hud {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.back {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding-right: 6px;
+  color: var(--bone);
+}
+
+.backArrow {
+  transition: transform var(--dur) var(--ease-out);
+}
+
+.back:hover .backArrow,
+.back:focus-visible .backArrow {
+  transform: translateX(-4px);
+}
+
+.back:hover :global(.t-label) {
+  color: var(--accent);
+}
+
+.kbd {
+  padding: 2px 5px;
+  border: 1px solid var(--line-strong);
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  letter-spacing: 0.1em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: var(--bone-mute);
+}
+
+.rule {
+  flex: 0 0 clamp(24px, 5vw, 88px);
+  height: 1px;
+  background: var(--line-strong);
+}
+
+.no {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--bone);
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+}
+
+.kind {
+  white-space: nowrap;
+}
+
+.fill {
+  flex: 1 1 auto;
+  min-width: 16px;
+  height: 1px;
+  background-image: linear-gradient(to right, var(--line-strong) 1px, transparent 1px);
+  background-size: 6px 1px;
+}
+
+/* ── título ────────────────────────────────────────── */
+.title {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  margin-top: clamp(20px, 2.8vw, 40px);
+}
+
+/* segunda linha alinhada à direita: escada assimétrica */
+.h1 [aria-hidden='true'] > span:nth-child(2) {
+  text-align: right;
+}
+
+/* ── subtítulo + links ─────────────────────────────── */
+.sub {
+  grid-column: 1 / 7;
+  grid-row: 3;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.32em;
+  max-width: 17ch;
+  margin-top: clamp(14px, 1.6vw, 24px);
+  font-size: clamp(2rem, 4.6vw, 4.75rem);
+  line-height: 0.96;
+  color: var(--bone);
+  text-wrap: balance;
+}
+
+.subStar {
+  flex: none;
+  width: 0.42em;
+  height: 0.42em;
+  margin-top: 0.22em;
+  color: var(--accent);
+}
+
+.links {
+  grid-column: 1 / 7;
+  grid-row: 4;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: clamp(24px, 3vw, 44px);
+}
+
+/* sem subtítulo: os links sobem para logo abaixo do título */
+.title + .links {
+  grid-row: 3;
+  margin-top: clamp(22px, 2.4vw, 36px);
+}
+
+/* ── ficha ─────────────────────────────────────────── */
+.spec {
+  grid-column: 8 / -1;
+  grid-row: 3 / 5;
+  margin-top: clamp(14px, 1.4vw, 20px);
+}
+
+/* ── capa ──────────────────────────────────────────── */
+.cover {
+  grid-column: 1 / -1;
+  grid-row: 5;
+  margin-top: clamp(24px, 2.6vw, 40px);
+}
+
+/* ── tablet e celular: recomposição ────────────────── */
+@media (max-width: 1024px) {
+  .head {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .hud,
+  .title,
+  .sub,
+  .links,
+  .spec,
+  .cover {
+    grid-column: 1 / -1;
+  }
+  .sub {
+    grid-row: 3;
+    max-width: 22ch;
+  }
+  .links {
+    grid-row: 4;
+  }
+  .cover {
+    grid-row: 5;
+    margin-top: clamp(40px, 6vw, 64px);
+  }
+  .spec {
+    grid-row: 6;
+    margin-top: clamp(48px, 8vw, 72px);
+  }
+}
+
+@media (max-width: 640px) {
+  .hud {
+    gap: 10px;
+  }
+  .rule {
+    display: none;
+  }
+  .title {
+    margin-top: 28px;
+  }
+  .sub {
+    margin-top: 14px;
+    font-size: 2.125rem;
+  }
+  .links {
+    margin-top: 24px;
+  }
+  .cta {
+    flex: 1 1 auto;
+    justify-content: space-between;
+    min-height: 52px;
+  }
+}

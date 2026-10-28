@@ -1,0 +1,221 @@
+.art {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--ink-1);
+  color: var(--bone);
+  container-type: size;
+}
+
+.grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.18;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+/* ── Barras de teste ───────────────────────────── */
+.barsTop {
+  position: absolute;
+  inset: 0 0 28% 0;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+.barsTop span {
+  background: color-mix(in oklab, var(--art) calc(100% - var(--k) * 13%), var(--ink-0));
+}
+.barsTop span:nth-child(2n) {
+  background: color-mix(in oklab, var(--bone) calc(90% - var(--k) * 11%), var(--ink-0));
+}
+.barsBottom {
+  position: absolute;
+  inset: 72% 0 0 0;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 3fr;
+}
+.barsBottom span:nth-child(1) {
+  background: var(--ink-0);
+}
+.barsBottom span:nth-child(2) {
+  background: var(--bone);
+}
+.barsBottom span:nth-child(3) {
+  background: var(--art);
+}
+.barsBottom span:nth-child(4) {
+  background: repeating-linear-gradient(90deg, var(--ink-0) 0 6px, var(--ink-2) 6px 12px);
+}
+.slate {
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  gap: 6px;
+  padding: 12px 18px 14px;
+  background: var(--ink-0);
+  text-align: center;
+  white-space: nowrap;
+}
+.slate strong {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-stretch: 62%;
+  text-transform: uppercase;
+  font-size: clamp(1.25rem, 9cqw, 4rem);
+  line-height: 0.85;
+}
+
+/* ── Alvo de registro ──────────────────────────── */
+.target {
+  position: absolute;
+  inset: 8%;
+  width: 84%;
+  height: 84%;
+  fill: none;
+  stroke: var(--art);
+  stroke-width: 0.6;
+  opacity: 0.9;
+}
+.bigNum {
+  position: absolute;
+  right: 4%;
+  top: -6%;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-stretch: 62%;
+  font-size: 70cqh;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--line-strong);
+}
+.corner {
+  position: absolute;
+  left: 5%;
+  bottom: 6%;
+  display: grid;
+  gap: 4px;
+}
+.corner :global(.t-label) {
+  color: var(--art);
+}
+.corner strong {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-stretch: 62%;
+  text-transform: uppercase;
+  font-size: clamp(1.5rem, 10cqw, 5rem);
+  line-height: 0.85;
+}
+
+/* ── Tipográfico ───────────────────────────────── */
+.type {
+  background: var(--art);
+  color: var(--ink-0);
+}
+.stack {
+  position: absolute;
+  inset: -4% -2%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-stretch: 62%;
+  text-transform: uppercase;
+  font-size: clamp(2rem, 24cqh, 12rem);
+  line-height: 0.8;
+  white-space: nowrap;
+}
+.outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--ink-0);
+}
+.badge {
+  position: absolute;
+  right: 4%;
+  bottom: 5%;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: var(--ink-0);
+  color: var(--bone);
+}
+
+/* ── Celular (wireframe) ───────────────────────── */
+.phone {
+  display: flex;
+  flex-direction: column;
+  gap: 5cqh;
+  padding: 4cqh 6cqw;
+  background: var(--ink-1);
+}
+.status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: clamp(8px, 4cqw, 13px);
+  color: var(--bone-dim);
+}
+.notch {
+  width: 30%;
+  height: 2.6cqh;
+  border-radius: 99px;
+  background: var(--ink-0);
+}
+.appHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.appTitle {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-stretch: 75%;
+  text-transform: uppercase;
+  font-size: clamp(14px, 11cqw, 40px);
+  line-height: 0.9;
+}
+.appDot {
+  width: 9cqw;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--art);
+}
+.hero {
+  flex: 0 0 34cqh;
+  background:
+    radial-gradient(circle at 70% 30%, color-mix(in oklab, var(--art) 70%, transparent), transparent 60%),
+    color-mix(in oklab, var(--art) 22%, var(--ink-2));
+}
+.rows {
+  display: grid;
+  gap: 2.4cqh;
+}
+.rows span {
+  height: 7cqh;
+  background: var(--ink-3);
+  border-left: 3px solid var(--art);
+}
+.rows span:nth-child(2) {
+  width: 80%;
+}
+.tabbar {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-around;
+  padding-top: 2cqh;
+  border-top: 1px solid var(--line);
+}
+.tabbar span {
+  width: 8cqw;
+  aspect-ratio: 1;
+  background: var(--line-strong);
+}
+.tabbar span:first-child {
+  background: var(--art);
+}

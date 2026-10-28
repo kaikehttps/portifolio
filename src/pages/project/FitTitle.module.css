@@ -1,0 +1,82 @@
+.box {
+  position: relative;
+  min-width: 0;
+}
+
+/* Medidor fora da tela: não ocupa espaço nem estoura a página */
+.host {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.measure {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 100px;
+  white-space: nowrap;
+}
+
+.title {
+  display: flow-root; /* a margem negativa das linhas não vaza: o eco alinha com o sólido */
+  font-size: var(--fs-xxl); /* antes da medição */
+  white-space: nowrap;
+}
+
+.lines {
+  display: block;
+}
+
+/* eco em contorno: mesmo texto, deslocado para baixo/direita, atrás do sólido */
+.title:has(.echo) {
+  position: relative;
+  isolation: isolate;
+}
+
+.echo {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--accent);
+  transform: translate(0.035em, 0.04em);
+  pointer-events: none;
+}
+
+.echoLine {
+  display: block;
+  padding-top: 0.16em;
+  margin-top: -0.16em;
+  padding-bottom: 0.03em;
+  margin-bottom: -0.03em;
+}
+
+.echoLine + .echoLine {
+  margin-top: -0.05em;
+}
+
+/* Janela de cada linha: folga em cima para til e acentos (Ã, É) */
+.line {
+  display: block;
+  overflow: hidden;
+  padding-top: 0.16em;
+  margin-top: -0.16em;
+  padding-bottom: 0.03em;
+  margin-bottom: -0.03em;
+}
+
+/* entre linhas empilhadas, folga para o til/acento não tocar a linha de cima */
+.line + .line {
+  margin-top: -0.05em;
+}
+
+.inner {
+  display: inline-block;
+  will-change: transform;
+}

@@ -1,0 +1,38 @@
+.notes {
+  padding-block: clamp(56px, 7vw, 104px) clamp(32px, 4vw, 56px);
+  row-gap: 16px;
+}
+
+.label {
+  grid-column: 1 / 4;
+  color: var(--bone-dim);
+}
+
+.list {
+  grid-column: 4 / 10;
+  display: grid;
+  gap: 14px;
+}
+
+.item {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  max-width: 64ch;
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+  color: var(--bone-dim);
+}
+
+.star {
+  flex: none;
+  color: var(--accent);
+  transform: translateY(1px);
+}
+
+@media (max-width: 860px) {
+  .label,
+  .list {
+    grid-column: 1 / -1;
+  }
+}

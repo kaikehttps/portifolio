@@ -1,0 +1,4 @@
+.page {
+  position: relative;
+  padding-top: calc(var(--nav-h) + clamp(12px, 2vw, 28px));
+}

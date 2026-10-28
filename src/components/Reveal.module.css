@@ -1,0 +1,49 @@
+.mask {
+  display: inline-block;
+  overflow: clip;
+  vertical-align: top;
+  /* folga para acentos e descendentes não serem cortados */
+  padding-block: 0.06em;
+  margin-block: -0.06em;
+}
+
+.block {
+  display: block;
+}
+
+.inner {
+  display: inherit;
+}
+
+.clip {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.settle {
+  position: absolute;
+  inset: 0;
+}
+
+/* placa que sai do quadro; o fio de acento varre a imagem */
+.plate {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: var(--ink-1);
+  pointer-events: none;
+}
+
+.plate[data-from='bottom'] {
+  border-bottom: 2px solid var(--accent);
+}
+.plate[data-from='top'] {
+  border-top: 2px solid var(--accent);
+}
+.plate[data-from='left'] {
+  border-left: 2px solid var(--accent);
+}
+.plate[data-from='right'] {
+  border-right: 2px solid var(--accent);
+}
