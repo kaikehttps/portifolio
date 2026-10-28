@@ -44,7 +44,7 @@ organizada com a clareza do KC1T (coluna central, margens generosas, seções be
 | Papel | Fonte | Uso |
 |---|---|---|
 | Display | Archivo (variável, eixo `wdth`) comprimida, caixa-alta | nome no início, títulos de projeto, redes do contato |
-| Serifa | Instrument Serif (normal e itálico) | títulos de seção, frase do Sobre, subtítulos |
+| Serifa | Instrument Serif (normal e itálico) | títulos de seção, citação do Sobre, subtítulos |
 | Mono | IBM Plex Mono | rótulos pequenos: `01 — Projetos`, metadados, botões |
 | Texto | Archivo normal | parágrafos |
 

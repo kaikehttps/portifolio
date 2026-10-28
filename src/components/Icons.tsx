@@ -33,6 +33,22 @@ export function Arrow({ size = 16, className, direction = 'up-right' }: IconProp
   )
 }
 
+/** Folha de documento com canto dobrado e linhas de texto (currículo). */
+export function FileIcon({ size = 24, className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" width={size} height={size} aria-hidden="true" className={className}>
+      <path
+        d="M6 2.5h8.5L19.5 7.5V21.5H6Z M14.5 2.5v5h5 M9 12.5h7 M9 15.5h7 M9 18.5h4"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinejoin="miter"
+        strokeLinecap="square"
+      />
+    </svg>
+  )
+}
+
 /** Mira / retícula de enquadramento. */
 export function Reticle({ size = 24, className }: IconProps) {
   return (

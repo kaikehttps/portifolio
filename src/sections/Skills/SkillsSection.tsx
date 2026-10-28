@@ -57,11 +57,6 @@ export function SkillsSection() {
           id="ferramentas-titulo"
           index={info.index}
           label={info.label}
-          title={
-            <>
-              Skills e <em>ferramentas</em>
-            </>
-          }
         />
       </div>
 

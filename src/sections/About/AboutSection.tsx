@@ -1,54 +1,64 @@
 import { profile, sectionInfo } from '@/content'
 import { SectionHead } from '@/components/SectionHead'
 import { FadeUp } from '@/components/Reveal'
-import { Star } from '@/components/Icons'
-import { Lead } from './Lead'
 import s from './About.module.css'
 
 /*
-  SOBRE — pequeno de propósito: uma frase em serifa à esquerda e, ao lado,
-  até dois parágrafos curtos e a assinatura. Sem foto.
+  SOBRE — minimalista: a apresentação à esquerda e, ao lado, a citação de
+  Albert Camus. (A cena de Sísifo está guardada em ./Sisyphus.tsx, fora de uso.)
 */
 export function AboutSection() {
   const info = sectionInfo('sobre')
   if (!info) return null
 
-  const { lead, body = [], facts = [] } = profile.about
+  const { body = [], quote } = profile.about
   const paragraphs = body.filter((p) => p.trim() !== '').slice(0, 2)
 
   return (
     <section id="sobre" aria-labelledby="sobre-titulo" className={s.section}>
       <div className="container">
-        <SectionHead id="sobre-titulo" index={info.index} label={info.label} title="Sobre mim" />
+        <SectionHead id="sobre-titulo" index={info.index} label={info.label} />
 
         <div className={s.body}>
-          <Lead text={lead} className={s.lead} />
+          <FadeUp className={s.copy} amount={0.4}>
+            {paragraphs.map((text, i) => (
+              <p key={i}>{text}</p>
+            ))}
+          </FadeUp>
 
-          {(paragraphs.length > 0 || facts.length > 0) && (
-            <FadeUp className={s.text} amount={0.4}>
-              {paragraphs.map((text, i) => (
-                <p key={i}>{text}</p>
-              ))}
-              {facts.length > 0 && (
-                <dl className={s.facts}>
-                  {facts.map((fact) => (
-                    <div key={fact.label} className={s.fact}>
-                      <dt>{fact.label}</dt>
-                      <dd>{fact.value}</dd>
-                    </div>
-                  ))}
-                </dl>
-              )}
+          {quote && (
+            <FadeUp className={s.quote} amount={0.6}>
+              <figure>
+                <blockquote>
+                  <p className={s.quoteText}>“{marked(quote.text)}”</p>
+                </blockquote>
+                <figcaption className={s.cite}>
+                  — {quote.author}
+                  {quote.source && (
+                    <>
+                      , <cite>{quote.source}</cite>
+                    </>
+                  )}
+                  {quote.year && <> ({quote.year})</>}
+                </figcaption>
+              </figure>
             </FadeUp>
           )}
-
-          <FadeUp className={s.sign} amount={0.8}>
-            <Star size={12} className={s.star} />
-            <span className={s.name}>{profile.name}</span>
-            <span className={s.signRole}>{profile.role}</span>
-          </FadeUp>
         </div>
       </div>
     </section>
+  )
+}
+
+/** `[palavra]` ganha a cor de sinal. */
+function marked(text: string) {
+  return text.split(/\[([^\]]+)\]/).map((part, i) =>
+    i % 2 ? (
+      <span key={i} className={s.mark}>
+        {part}
+      </span>
+    ) : (
+      part
+    ),
   )
 }

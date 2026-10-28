@@ -1,113 +1,169 @@
 .section {
-  padding-top: var(--section-pad);
+  padding-top: calc(var(--section-pad) * 0.65);
 }
 
-/* Linha única e grande: documento, chamada, formato e a seta para baixo */
-.download {
-  position: relative;
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto auto;
+/* composição centrada: controles e legenda empilhados, com respiro dos dois lados */
+.stage {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  column-gap: clamp(16px, 2.4vw, 32px);
-  padding-block: clamp(28px, 3.6vw, 48px);
-  border-block: 1px solid var(--line);
-  color: var(--bone);
-  overflow: hidden;
-  isolation: isolate;
+  gap: clamp(20px, 3vh, 28px);
+  padding-block: clamp(8px, 2vh, 24px);
 }
 
-/* preenchimento que sobe da base no hover (o mesmo gesto do contato) */
-a.download::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: var(--signal);
-  transform: scaleY(0);
-  transform-origin: 50% 100%;
-  transition: transform 0.6s var(--ease-out);
-}
-a.download:hover,
-a.download:focus-visible {
-  color: var(--signal-ink);
-}
-a.download:hover::before,
-a.download:focus-visible::before {
-  transform: scaleY(1);
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 20px clamp(24px, 3vw, 40px);
 }
 
-.download[data-pending] {
-  color: var(--bone-mute);
-}
-
-.doc {
-  flex: none;
-}
-
-.label {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-stretch: 62%;
-  font-variation-settings: 'wdth' var(--wdth-compressed);
-  font-size: clamp(2.5rem, 6vw, 5.5rem);
-  line-height: 0.9;
-  text-transform: uppercase;
-}
-
-.meta {
-  font-family: var(--font-mono);
-  font-size: 0.8125rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  opacity: 0.75;
+/* Pílula clara: ícone de documento, texto e a seta num círculo escuro (o mesmo desenho do "Contatar") */
+.pill {
+  --h: clamp(48px, 3.8vw, 54px);
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  height: var(--h);
+  padding: 0 5px 0 clamp(18px, 1.8vw, 22px);
+  border-radius: 999px;
+  background: var(--bone);
+  color: var(--ink-0);
+  font-size: clamp(0.9375rem, 0.88rem + 0.25vw, 1.0625rem);
+  font-weight: 500;
   white-space: nowrap;
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
 }
 
-.go {
+.file {
+  flex: none;
+  opacity: 0.7;
+  transition: opacity var(--dur-fast) var(--ease-out);
+}
+
+.text {
+  margin-right: 8px;
+}
+
+.icon {
   display: grid;
   place-items: center;
-  width: 56px;
-  height: 56px;
-  border: 1px solid currentColor;
+  flex: none;
+  overflow: hidden;
+  width: calc(var(--h) - 10px);
+  height: calc(var(--h) - 10px);
   border-radius: 50%;
-  transition: transform var(--dur) var(--ease-out);
-}
-a.download:hover .go {
-  transform: translateY(4px);
+  background: var(--ink-0);
+  color: var(--bone);
+  transition: background-color var(--dur-fast) var(--ease-out);
 }
 
+/* as duas setas dividem a mesma célula; a segunda espera acima, fora do círculo */
+.arrows {
+  display: grid;
+  height: 17px;
+}
+.arrows > svg {
+  grid-area: 1 / 1;
+  transition: transform 0.45s var(--ease-out);
+}
+.arrows > svg:first-child {
+  transform: translateY(0) rotate(90deg) !important;
+}
+.arrows > svg:last-child {
+  transform: translateY(-190%) rotate(90deg) !important;
+}
+
+a.pill:hover,
+a.pill:focus-visible {
+  background: #fff;
+}
+a.pill:hover .file,
+a.pill:focus-visible .file {
+  opacity: 1;
+}
+a.pill:hover .icon,
+a.pill:focus-visible .icon {
+  background: var(--signal);
+  color: var(--signal-ink);
+}
+a.pill:hover .arrows > svg:first-child,
+a.pill:focus-visible .arrows > svg:first-child {
+  transform: translateY(190%) rotate(90deg) !important;
+}
+a.pill:hover .arrows > svg:last-child,
+a.pill:focus-visible .arrows > svg:last-child {
+  transform: translateY(0) rotate(90deg) !important;
+}
+a.pill:active {
+  transform: translateY(1px);
+}
+
+.pill[data-pending] {
+  opacity: 0.4;
+}
+
+/* link editorial: sublinhado fino que vira laranja no hover */
 .view {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
   min-height: 44px;
-  margin-top: 16px;
-  font-family: var(--font-mono);
-  font-size: 0.8125rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-size: 0.9375rem;
   color: var(--bone-dim);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--line-strong);
+  text-underline-offset: 6px;
+  transition:
+    color var(--dur-fast) var(--ease-out),
+    text-decoration-color var(--dur-fast) var(--ease-out);
 }
 .view:hover,
 .view:focus-visible {
   color: var(--bone);
+  text-decoration-color: var(--signal);
 }
 
-@media (max-width: 640px) {
-  .download {
-    grid-template-columns: auto minmax(0, 1fr) auto;
-    row-gap: 8px;
+.caption {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--bone-mute);
+}
+
+.mark {
+  width: 5px;
+  height: 5px;
+  background: var(--signal);
+}
+
+@media (max-width: 639px) {
+  .actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 6px;
   }
-  .meta,
-  .badge {
-    grid-column: 2;
-    grid-row: 2;
-    justify-self: start;
+
+  .pill {
+    justify-content: space-between;
+    width: min(100%, 300px);
   }
-  .go {
-    grid-column: 3;
-    grid-row: 1;
-    width: 44px;
-    height: 44px;
+
+  .text {
+    margin-right: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arrows > svg,
+  .pill {
+    transition: none;
   }
 }

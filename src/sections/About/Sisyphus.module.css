@@ -1,0 +1,65 @@
+/* as bordas da cena se dissolvem no fundo (o grão vem da camada global do site) */
+.scene {
+  position: relative;
+  pointer-events: none;
+  -webkit-mask-image:
+    linear-gradient(to right, transparent, #000 4%, #000 94%, transparent),
+    linear-gradient(to bottom, transparent, #000 14%, #000 86%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent, #000 4%, #000 94%, transparent),
+    linear-gradient(to bottom, transparent, #000 14%, #000 86%, transparent);
+  mask-composite: intersect;
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* silhueta: traços grossos, pontas redondas */
+.body path,
+.rimLight path {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+/* figura clara (osso) sobre o céu escuro: lê bem em qualquer ponto da subida */
+.body path {
+  stroke: var(--bone);
+}
+.body circle {
+  fill: var(--bone);
+}
+.body [data-far] path {
+  stroke: #a8a297;
+}
+.body [data-far] circle {
+  fill: #a8a297;
+}
+
+.rimLight {
+  opacity: 0.9;
+}
+.rimLight path {
+  stroke: var(--signal);
+}
+.rimLight circle {
+  fill: var(--signal);
+}
+
+.stoneRim {
+  fill: var(--signal);
+  opacity: 0.55;
+}
+
+.stoneMarks path {
+  fill: none;
+  stroke: rgb(236 230 218 / 0.09);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+.stoneMarks circle {
+  fill: rgb(0 0 0 / 0.35);
+}

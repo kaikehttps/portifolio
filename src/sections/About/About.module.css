@@ -2,97 +2,60 @@
   padding-top: calc(var(--section-pad) * 0.65);
 }
 
-/* Compacto: a frase à esquerda, o texto e a assinatura ao lado */
+/* Duas colunas: a apresentação e, ao lado, a citação, alinhadas pela base */
 .body {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
-  grid-template-rows: auto 1fr;
   column-gap: var(--col-gap);
-  row-gap: clamp(20px, 2.5vw, 32px);
-  align-items: start;
+  row-gap: 40px;
+  align-items: end;
 }
 
-.lead {
+.copy {
   grid-column: 1 / 7;
-  grid-row: 1 / span 2;
-  --lead-size: clamp(1.5rem, 2.3vw, 2.25rem);
-}
-
-.text {
-  grid-column: 8 / -1;
   display: flex;
   flex-direction: column;
   gap: 1em;
-  max-width: 44ch;
-  font-size: var(--fs-md);
+  max-width: 46ch;
+  font-size: clamp(1.0625rem, 0.95rem + 0.4vw, 1.3125rem);
   line-height: 1.65;
+  color: var(--bone);
+}
+
+.quote {
+  grid-column: 8 / -1;
+}
+
+.quoteText {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.75rem, 1.2rem + 1.6vw, 2.75rem);
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  color: var(--bone);
+  text-wrap: balance;
+}
+
+.mark {
+  color: var(--signal);
+}
+
+.cite {
+  margin-top: 16px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--bone-mute);
+}
+.cite cite {
+  font-style: normal;
   color: var(--bone-dim);
 }
 
-.facts {
-  display: grid;
-  gap: 10px;
-  margin-top: 12px;
-}
-.fact {
-  display: flex;
-  gap: 16px;
-  padding-top: 10px;
-  border-top: 1px solid var(--line);
-}
-.fact dt {
-  min-width: 8rem;
-  font-family: var(--font-mono);
-  font-size: var(--fs-label);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--bone-mute);
-  padding-top: 0.3em;
-}
-.fact dd {
-  color: var(--bone);
-}
-
-.sign {
-  grid-column: 8 / -1;
-  align-self: end;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.star {
-  color: var(--signal);
-}
-.name {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: 1.5rem;
-  color: var(--bone);
-}
-.signRole {
-  font-family: var(--font-mono);
-  font-size: var(--fs-label);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--bone-mute);
-}
-
 @media (max-width: 960px) {
-  .body {
-    grid-template-rows: none;
-  }
-  .lead {
+  .copy,
+  .quote {
     grid-column: 1 / -1;
-    grid-row: auto;
-  }
-  .text,
-  .sign {
-    grid-column: 1 / -1;
-  }
-}
-
-@media (max-width: 640px) {
-  .sign {
-    flex-wrap: wrap;
   }
 }

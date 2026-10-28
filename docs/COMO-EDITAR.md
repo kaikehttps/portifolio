@@ -86,9 +86,12 @@ A ordem da lista é a ordem no site.
 ## 2. Perfil, apresentação e contato — `src/content/profile.ts`
 
 - `intro`: a apresentação curta da tela inicial (1–2 linhas).
-- `about.lead`: a frase grande da seção Sobre. Uma palavra entre `[colchetes]` ganha destaque.
-- `about.body`: até dois parágrafos curtos. Enquanto estiver vazio, aparece um lembrete só em
-  `npm run dev`; no site publicado o bloco some. `about.facts`: pares rótulo/valor (opcional).
+- `about.body`: até dois parágrafos curtos da seção Sobre. Enquanto estiver vazio, aparece um lembrete só em
+  `npm run dev`; no site publicado o bloco some.
+- `about.quote`: a citação em destaque (`text`, `author`, `source`, `year`). Uma palavra entre `[colchetes]`
+  ganha a cor de sinal. Hoje: "É preciso imaginar Sísifo [feliz]." — Albert Camus, *O Mito de Sísifo* (1942).
+- `role`: o cargo da assinatura e da etiqueta do início ("Desenvolvedor full stack").
+- A cena de Sísifo (encosta, pedra e figura) está guardada em `src/sections/About/Sisyphus.tsx`, fora de uso por enquanto.
 - `socials`: os links do contato. **Instagram e LinkedIn** têm `primary: true` e aparecem grandes.
   - Preencha `url` com o endereço completo. Com `url` vazio o link aparece como "pendente" em
     desenvolvimento e fica oculto no site publicado. Instagram: `kaike_alvesz`.

@@ -11,7 +11,7 @@ export const profile: Profile = {
   name: 'Kaike Alves',
   firstName: 'Kaike',
   lastName: 'Alves',
-  role: 'Desenvolvedor front-end',
+  role: 'Desenvolvedor full stack',
 
   // apresentação do hero (1–2 linhas)
   intro:
@@ -20,16 +20,18 @@ export const profile: Profile = {
   disciplines: ['Apps', 'Sites', 'Produtos', 'Experimentos', 'Agents de IA'],
 
   about: {
-    // RASCUNHO — a palavra entre [colchetes] ganha destaque
-    lead: 'Escrevo interfaces de dia e, às vezes, empresto a [voz] a personagens de noite.',
-    // Até 2 parágrafos curtos sobre como você trabalha e o que procura construir.
-    // Vazio = em desenvolvimento aparece um lembrete; no site publicado o bloco some.
+    // Até 2 parágrafos curtos. Vazio = em desenvolvimento aparece um lembrete; no site publicado o bloco some.
     body: [
-      // 'Primeiro parágrafo.',
+      'Sou desenvolvedor e estudante de Sistemas de Informação. Gosto de criar soluções, compartilhar o que aprendo e aprender com as pessoas ao meu redor. Recentemente, também tive a experiência de dar aulas, algo que reforçou meu gosto por ensinar e me comunicar.',
     ],
-    facts: [
-      // { label: 'Base', value: 'Sua cidade' },
-    ],
+    // Citação em destaque. A palavra entre [colchetes] ganha a cor de sinal.
+    // Última frase de "O Mito de Sísifo" (1942): « Il faut imaginer Sisyphe heureux. »
+    quote: {
+      text: 'É preciso imaginar Sísifo [feliz].',
+      author: 'Albert Camus',
+      source: 'O Mito de Sísifo',
+      year: '1942',
+    },
   },
 
   // Currículo: o PDF vai em src/assets/curriculo/. Data opcional, ex.: 'mar 2026'.

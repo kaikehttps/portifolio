@@ -12,6 +12,20 @@
   margin-bottom: clamp(56px, 7vw, 104px);
 }
 
+/* só o fio e o rótulo: o conteúdo começa logo abaixo */
+.head[data-compact='true'] {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    'meta'
+    'aside';
+  row-gap: 14px;
+  margin-bottom: clamp(32px, 3.6vw, 52px);
+}
+
+.head[data-compact='true'] .meta {
+  font-weight: 400;
+}
+
 .meta {
   grid-area: meta;
   display: flex;

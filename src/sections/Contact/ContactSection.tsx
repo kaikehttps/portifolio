@@ -27,7 +27,7 @@ export function ContactSection() {
           label={info.label}
           title={
             <>
-              Onde me <em>encontrar</em>
+              Entre em <em>contato</em>
             </>
           }
         />

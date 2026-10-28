@@ -7,6 +7,7 @@ import styles from './SectionHead.module.css'
  * e, opcionalmente, uma frase curta à direita. O mesmo desenho em todas as
  * seções — quem passa o olho entende a estrutura da página.
  * No título, um trecho entre <em> ganha itálico (ex.: <>Projetos <em>selecionados</em></>).
+ * Sem `title`, fica só o fio com o número e o rótulo (que vira o <h2>).
  */
 export function SectionHead({
   id,
@@ -19,15 +20,29 @@ export function SectionHead({
   id: string
   index: string
   label: string
-  title: ReactNode
+  title?: ReactNode
   aside?: ReactNode
 }) {
+  const meta = (
+    <>
+      <span className={styles.index}>{index}</span>
+      <span className={styles.label}>{label}</span>
+    </>
+  )
+
+  if (!title)
+    return (
+      <header className={styles.head} data-compact="true">
+        <h2 id={id} className={styles.meta}>
+          {meta}
+        </h2>
+        {aside && <p className={styles.aside}>{aside}</p>}
+      </header>
+    )
+
   return (
     <header className={styles.head}>
-      <p className={styles.meta}>
-        <span className={styles.index}>{index}</span>
-        <span className={styles.label}>{label}</span>
-      </p>
+      <p className={styles.meta}>{meta}</p>
       <h2 id={id} className={styles.title}>
         <MaskReveal block>{title}</MaskReveal>
       </h2>

@@ -38,6 +38,14 @@ export interface Fact {
   value: string
 }
 
+export interface Quote {
+  text: string
+  author: string
+  /** Obra de onde a frase vem. */
+  source?: string
+  year?: string
+}
+
 export interface Project {
   /** Identificador na URL: /projetos/<slug>. Use minúsculas e hífens. */
   slug: string
@@ -129,11 +137,10 @@ export interface Profile {
   /** Frentes de trabalho exibidas no hero. */
   disciplines: string[]
   about: {
-    /** Frase principal, grande. Envolva uma palavra em [colchetes] para destacá-la. */
-    lead: string
     /** Até 2 parágrafos curtos. */
     body?: string[]
-    facts?: Fact[]
+    /** Citação em destaque. Envolva uma palavra em [colchetes] para destacá-la. */
+    quote?: Quote
   }
   /** Currículo em PDF: o arquivo fica em src/assets/curriculo/. */
   resume?: {
